@@ -1,0 +1,7 @@
+.DS_Store
+env/*
+git_tr/*
+home_work1/__pycache__/
+home_work1/archive/
+
+.pyc*
