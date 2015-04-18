@@ -2,7 +2,6 @@ class Helper(object):
 
     def __init__(self, rows, cols, start):
         """
-            rows x cols
             start - where to start
             finish - end of path
         """
@@ -21,7 +20,6 @@ class Helper(object):
         return pt[0] >= 0 and pt[0] < orig[0] \
             and pt[1] >= 0 and pt[1] < orig[1]
 
-    # @staticmethod
     def get_short_path(self, finish, parents, result):
         if (parents[finish] != self.start):
             self.get_short_path(parents[finish], parents, result)
