@@ -56,7 +56,6 @@ def aka_bfs(start, goal):
 t0 = time.time()
 aka_bfs(start, finish)
 t1 = time.time() - t0
-sheet[alg_time_field].value = t1
 
 # part 3
 helper.get_short_path(finish, parents, results)
@@ -71,6 +70,7 @@ for elem in board_list:
 for coo in coordinates:
     sheet[coo].value = horse
 
+sheet[alg_time_field].value = t1
 wb.save(filename=destination)
 
 # open in exel
