@@ -40,7 +40,7 @@ for i, row in enumerate(sheet.iter_rows(BOARD_RANGE)):
         if cell.style_id not in EMPTY_CELLS:
             matrix[i][j] = -1
 
-def aka_bfs(start, goal):
+def aka_bfs(start, goal, board):
     queue.append(start)
     found = False
     while(queue and not found):
@@ -49,12 +49,12 @@ def aka_bfs(start, goal):
             found = True
         next_steps = helper.horse_moves(step)
         for nst in next_steps:
-            if not parents.get(nst, 0) and matrix[nst[0]][nst[1]] != -1:
+            if not parents.get(nst, 0) and board[nst[0]][nst[1]] != -1:
                 queue.append(nst)
                 parents[nst] = step
 
 t0 = time.time()
-aka_bfs(start, finish)
+aka_bfs(start, finish, matrix)
 t1 = time.time() - t0
 
 # part 3
