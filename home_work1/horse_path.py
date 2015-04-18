@@ -43,7 +43,7 @@ for i, row in enumerate(sheet.iter_rows(BOARD_RANGE)):
 def aka_bfs(start, goal):
     queue.append(start)
     found = False
-    while(len(queue) > 0 and not found):
+    while(queue and not found):
         step = queue.popleft()
         if step == goal:
             found = True
