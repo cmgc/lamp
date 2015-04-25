@@ -24,6 +24,7 @@ top_border = 3  # sheet.BREAK_ROW
 left_border = 1  # sheet.BREAK_COLUMN
 rows = len(sheet.rows) - top_border
 cols = len(sheet.columns) - left_border
+print(rows, cols)
 start = (0, 0)  # start point
 finish = (119, 108) # end point
 helper = Helper(rows, cols, start)
@@ -32,32 +33,37 @@ queue = deque()
 parents = dict()
 results = []
 coordinates = []
+walls = dict()
 
-matrix = [[0] * cols for i in range(rows)]
+# matrix = [[0] * cols for i in range(rows)]
 
 for i, row in enumerate(sheet.iter_rows(BOARD_RANGE)):
     for j, cell in enumerate(row):
         if cell.style_id not in EMPTY_CELLS:
-            matrix[i][j] = -1
+            # matrix[i][j] = -1
+            walls[(i, j)] = -1
 
-def aka_bfs(start, goal, board):
+def aka_bfs(start, goal):
     queue.append(start)
     found = False
     while(queue and not found):
         step = queue.popleft()
         if step == goal:
             found = True
-        next_steps = helper.horse_moves(step)
-        for nst in next_steps:
-            if not parents.get(nst, 0) and board[nst[0]][nst[1]] != -1:
+        for nst in helper.horse_moves(step):
+            # if not parents.get(nst, 0) and board[nst[0]][nst[1]] != -1:
+            if not parents.get(nst, 0) and nst not in walls:
                 queue.append(nst)
                 parents[nst] = step
 
 t0 = time.time()
-aka_bfs(start, finish, matrix)
+aka_bfs(start, finish)
 t1 = time.time() - t0
+print(t1)
+exit(0)
 
 # part 3
+
 helper.get_short_path(finish, parents, results)
 board_list = list(map(lambda x: (x[0] + 4, x[1] + 2), results))
 
@@ -72,7 +78,6 @@ for coo in coordinates:
 
 sheet[alg_time_field].value = t1
 wb.save(filename=destination)
-
 # open in exel
 # from xlwings import Workbook, Sheet, Range
 # wb = Workbook(fullname='kv008horse.xlsx')
